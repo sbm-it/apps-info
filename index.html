@@ -4,14 +4,13 @@
     <style>
       #map {
         width: 90%;
-        height: 400px;
+        height: 300px;
       }
       p { text-indent: 50px; }
     </style>
     <script>
-//      var msg = encodeURIComponent("Check out the Stony Brook Medicine Mobile App Store @ http://sbm-it.github.io/apps");
-
-      function initMap() {
+      // Google Map
+      var initMap = (function() {
         var position = new google.maps.LatLng(40.9096684,-73.1176586);
         var mapDiv = document.getElementById('map');
         var map = new google.maps.Map(mapDiv, {
@@ -23,42 +22,43 @@
           map: map,
           title:"This is the place."
         });
+      });
 
-        (function(){
-          var isIosDevice = (function() {
-            var ua = navigator.userAgent.toLowerCase();
-            if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1) {
-              return true;
-            } else {
-              return false;
-            }
-          })();
+      // Set the proper HREF tag for SMS.  Android and IOS are slightly different
+      var setSMSLink = (function(){
+        var isIosDevice = (function() {
+          var ua = navigator.userAgent.toLowerCase();
+          if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1) {
+            return true;
+          } else {
+            return false;
+          }
+        })();
 
-          var smsLink = function() {
-        		var msg = encodeURIComponent("Check out the Stony Brook Medicine Mobile App Store @ http://sbm-it.github.io/apps");
+        var smsLink = function() {
+      		var msg = encodeURIComponent("Check out the Stony Brook Medicine Mobile App Store @ http://sbm-it.github.io/apps");
 
-        		// No more support for iOS 6 + 7
-        		if(isIosDevice) {
-        			href = "sms:&body=" + msg;
-        		} else {
-        			href = "sms:?body=" + msg;
-        		}
+      		// No more support for iOS 6 + 7
+      		if(isIosDevice) {
+      			href = "sms:&body=" + msg;
+      		} else {
+      			href = "sms:?body=" + msg;
+      		}
 
-        		return href
-        	};
+      		return href;
+      	};
+        document.getElementById("sms-href").setAttribute("href",smsLink());
 
-          document.getElementById("sms-href").setAttribute("href",smsLink('xxx'));
+      });
 
-        }).call(this);
 
-      }
     </script>
   </head>
   <body>
     <div class="container">
       <div>Stony Brook Medicine (SBM) Apps</div>
 
-      <div>Welcome to the SBM App Store.  Here you will find access to a growing number of mobile apps for our patients and their healthcare professionals.  A key is required to access private apps.</div>
+      <div>Welcome to the SBM App Store.  Here you will find access to a growing number of mobile apps for our patients and their healthcare professionals.  Our Appstore empowers patients to take actively track their health and fitness.  A key is required to access private apps.</div>
 
       <h3 style="color:maroon">Installing on your mobile device</h3>
       <p>
@@ -67,18 +67,19 @@
 
       <h3 style="color:maroon">Share it with others</h3>
       <p><a href="http://sbm-it.github.io/apps" target="_blank"><img width="'+(sbmApps.iconWidth)+'" src="img/qrcode.png"></a><br>
-        <a href="sms:?body=">Text it to someone (Android)</a>
-        <a href="sms:&body=">Text it to someone (IOS)</a>
         <a id="sms-href" href="">Text it to someone (Both)</a>
 
 
       <h3 style="color:maroon">About Us</h3>
+      <div id="map"></div>
       <div><a href="https://www.stonybrookmedicine.edu">Stony Brook Medicine</a></div>
       <div>101 Nicolls Road, Stony Brook NY 11794</div>
       <div>(631) 689-8333</div>
-      <div id="map"></div>
-      <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
     </div>
-
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    <script type="text/javascript">
+      // Call setSMSLink after DOM loaded
+      setSMSLink();
+    </script>
   </body>
 </html>
