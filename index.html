@@ -84,13 +84,13 @@
       <div><a href="https://www.stonybrookmedicine.edu">Stony Brook Medicine</a></div>
       <div>101 Nicolls Road, Stony Brook NY 11794</div>
       <div>(631) 689-8333</div>
+      <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+      <script type="text/javascript">
+          // Call setSMSLink after DOM loaded
+          setSMSLink();
+          setAttribs();
+          sbmApps.linkStore()
+      </script>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
-    <script type="text/javascript">
-      // Call setSMSLink after DOM loaded
-      setSMSLink();
-      setAttribs();
-      sbmApps.linkStore()
-    </script>
 </body>
 </html>
