@@ -1,13 +1,16 @@
-
 <html>
-  <head>
+<head>
     <style>
       #map {
-        width: 90%;
+        width: 100%;
         height: 300px;
       }
       p { text-indent: 50px; }
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+<!--    <script src="js/bootstrap.min.js"></script> -->
     <script src="https://sbm-it.github.io/apps/sbmApps.js"></script>
     <script>
       // Google Map
@@ -28,7 +31,10 @@
       // Set the proper HREF tag for SMS.  Android and IOS are slightly different
       var setSMSLink = (function(){
         var isIosDevice = (function() {
-          var ua = navigator.userAgent.toLowerCase();
+          var header = [navigator.platform,navigator.userAgent,navigator.appVersion,navigator.vendor,window.opera];
+          var agent = header.join(' ');
+          var ua = agent.toLowerCase();
+
           if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1) {
             return true;
           } else {
@@ -39,13 +45,11 @@
         var smsLink = function() {
       		var msg = encodeURIComponent("Check out the Stony Brook Medicine Mobile App Store @ http://sbm-it.github.io/apps");
 
-      		// No more support for iOS 6 + 7
       		if(isIosDevice) {
       			href = "sms:&body=" + msg;
       		} else {
       			href = "sms:?body=" + msg;
       		}
-
       		return href;
       	};
         document.getElementById("sms-href").setAttribute("href",smsLink());
@@ -59,10 +63,10 @@
         document.getElementById("imgSMS").setAttribute("width",sbmApps.iconWidth);
       });
     </script>
-  </head>
-  <body>
+</head>
+<body>
     <div class="container">
-      <div>Welcome to the Stony Brook Medicine App Store.  Here you will find access to a growing number of mobile apps for our patients and their healthcare professionals.  The goal of our Appstore empowers patients to take actively track their health and fitness.  A key is required to access private apps.</div>
+      <div class-"lead">Welcome to the Stony Brook Medicine App Store.  Here you will find access to a growing number of mobile apps for our patients and their healthcare professionals.  The goal of our Appstore empowers patients to take actively track their health and fitness.  A key is required to access private apps.</div>
 
       <h3 style="color:maroon">Installing on your mobile device</h3>
       <p>
@@ -88,5 +92,5 @@
       setAttribs();
       sbmApps.linkStore()
     </script>
-  </body>
+</body>
 </html>
