@@ -8,6 +8,7 @@
       }
       p { text-indent: 50px; }
     </style>
+    <script src="https://sbm-it.github.io/apps/sbmApps.js"></script>
     <script>
       // Google Map
       var initMap = (function() {
@@ -15,7 +16,7 @@
         var mapDiv = document.getElementById('map');
         var map = new google.maps.Map(mapDiv, {
           center: position,
-          zoom: 15
+          zoom: 10
         });
         var marker = new google.maps.Marker({
           position: position,
@@ -48,26 +49,28 @@
       		return href;
       	};
         document.getElementById("sms-href").setAttribute("href",smsLink());
-
       });
 
-
+      // Set image properties from smsApps
+      var setAttribs = (function() {
+        document.getElementById("imgAndroid").setAttribute("width",sbmApps.iconWidth);
+        document.getElementById("imgApple").setAttribute("width",sbmApps.iconWidth);
+        document.getElementById("imgQR").setAttribute("width",sbmApps.iconWidth);
+      });
     </script>
   </head>
   <body>
     <div class="container">
-      <div>Stony Brook Medicine (SBM) Apps</div>
-
-      <div>Welcome to the SBM App Store.  Here you will find access to a growing number of mobile apps for our patients and their healthcare professionals.  Our Appstore empowers patients to take actively track their health and fitness.  A key is required to access private apps.</div>
+      <div>Welcome to the Stony Brook Medicine App Store.  Here you will find access to a growing number of mobile apps for our patients and their healthcare professionals.  The goal of our Appstore empowers patients to take actively track their health and fitness.  A key is required to access private apps.</div>
 
       <h3 style="color:maroon">Installing on your mobile device</h3>
       <p>
-      <a href="AddAndroidHomeScreen.html" target="_blank"><img width="'+(sbmApps.iconWidth)+'" src="img/android.png"></a>
-      <a href="AddIOSHomeScreen.html" target="_blank"><img width="'+(sbmApps.iconWidth)+'" src="img/apple.png"></a></p>
+      <a href="AddAndroidHomeScreen.html"><img id="imgAndroid" src="img/android.png"></a>
+      <a href="AddIOSHomeScreen.html"><img id="imgApple" src="img/apple.png"></a></p>
 
       <h3 style="color:maroon">Share it with others</h3>
-      <p><a href="http://sbm-it.github.io/apps" target="_blank"><img width="'+(sbmApps.iconWidth)+'" src="img/qrcode.png"></a><br>
-        <a id="sms-href" href="">Text it to someone (Both)</a>
+      <p><img id="imgQR" src="http://sbm-it.github.io/apps/img/qrcode.png"></a><br>
+        <a id="sms-href" href="">Text it to someone</a>
 
 
       <h3 style="color:maroon">About Us</h3>
@@ -80,6 +83,8 @@
     <script type="text/javascript">
       // Call setSMSLink after DOM loaded
       setSMSLink();
+      setAttribs();
+      sbmApps.linkStore()
     </script>
   </body>
 </html>
